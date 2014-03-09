@@ -1,0 +1,19 @@
+{
+  "name": "mini-router",
+  "description": "More capable router to replace connect-router",
+  "version": "0.0.1",
+  "author": "Miko Nieminen <miko.nieminen@iki.fi>",
+  "keywords": [ "connect", "router", "mini-module" ],
+  "main": "router.js",
+  "dependencies": {
+    "mini-promise": "*",
+    "mime": "*"
+  },
+  "devDependencies": {
+    "connect": "*",
+    "mocha": "*"
+  },
+  "engines": {
+    "node": ">= 0.10.x"
+  }
+}
