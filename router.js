@@ -215,7 +215,7 @@ Router.prototype.add = function (methods, route, handler) {
                 }
             });
             methods.forEach(function (method) {
-                self.routes[method].push({regex: re, fn: handler, params: params});
+                self.routes[method.toUpperCase()].push({regex: re, fn: handler, params: params});
             });
         } else {
             throw new Error("Unsupported type passed as method");
