@@ -52,19 +52,20 @@ Router.prototype.addStatic = function (route, path) {
             }
             self.add(["HEAD", "GET"], re, function staticRequestHandler(req, res, next) {
                 new Promise(function (resolve, reject) {
+                    var url = URL.parse(req.url);
                     if (fileTarget) {
                         resolve(path);
                     } else {
                         // Make security checks that requests does not try
                         // to go backwards in the filesystem if static path
                         // points to a directory.
-                        if (req.url.match(/.*\.\..*/)) {
+                        if (url.pathname.match(/.*\.\..*/)) {
                             res.writeHead(403);
                             res.end("Illegal request");
                             reject(new Error("Trying to access paths with \"..\", that is forbidden."));
                         } else {
                             var filename = null;
-                            var pathMatch = req.url ? req.url.match(re) : null;
+                            var pathMatch = url.pathname ? url.pathname.match(re) : null;
                             try {
                                 if (pathMatch) {
                                     if (fileTarget) {
@@ -224,9 +225,9 @@ Router.prototype.add = function (methods, route, handler) {
     });
 };
 
-Router.prototype.match = function (method, url) {
+Router.prototype.match = function (method, path) {
     var matches = this.routes[method].reduce(function (matching, handler) {
-        var match = url.match(handler.regex);
+        var match = path.match(handler.regex);
         var params = null;
         if (match && handler.fn.name === "staticRequestHandler") {
             matching.push({regexp: handler.regex, fn: handler.fn, params: params});
