@@ -261,7 +261,7 @@ Router.prototype.static = function (route, path) {
 };
 
 Router.prototype.get = function (route, handler) {
-    return this.add("GET", route, handler);
+    return this.add(["GET", "HEAD"], route, handler);
 };
 
 Router.prototype.put = function (route, handler) {
