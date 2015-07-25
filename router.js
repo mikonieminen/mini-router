@@ -155,8 +155,20 @@ Router.prototype.addStatic = function (route, path) {
                                     res.end("Access denied");
                                     resolve();
                                 } else if (err && err.code && err.code === "EISDIR") {
-                                    res.writeHead(401);
-                                    res.end("Directory listing is not allowed");
+                                    // redirect to index.html in the requested path
+                                    var redirectTo = req.url;
+                                    if (redirectTo[redirectTo.length - 1] === '/') {
+                                        redirectTo = redirectTo + "index.html";
+                                    } else {
+                                        redirectTo = redirectTo + "/index.html";
+                                    }
+                                    console.log("Requested directory, redirect to: " + redirectTo);
+                                    res.writeHead(307, {
+                                        "Location": redirectTo
+                                    });
+                                    // res.writeHead(401);
+                                    // res.end("Directory listing is not allowed");
+                                    res.end();
                                     resolve();
                                 } else {
                                     res.writeHead(500);
@@ -220,7 +232,6 @@ Router.prototype.add = function (methods, route, handler) {
         } else {
             throw new Error("Unsupported type passed as method");
         }
-
         resolve();
     });
 };
