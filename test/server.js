@@ -1,4 +1,5 @@
 var connect = require("connect");
+var logger = require("connect-logger");
 var http = require("http");
 
 var Promise = require("mini-promise").Promise;
@@ -28,10 +29,10 @@ Promise.all([
         res.end(router.routes);
     })
 ]).then(function () {
-    console.log("Listening requests in port 3000.");
     var app = connect();
-    app.use(connect.logger());
+    app.use(logger());
     app.use(router.connect());
+    console.log("Listening requests in port 3000");
     http.createServer(app).listen(3000);
 }).catch(function (reason) {
     console.error("Failed to start server: ", reason);
