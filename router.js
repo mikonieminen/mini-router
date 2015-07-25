@@ -5,8 +5,14 @@ var Promise = require("mini-promise").Promise;
 
 var URL = require("url");
 
-function Router(name) {
+function Router(name, logger) {
     this.name = name;
+
+    this.logger = logger != null ? logger : {
+        log: console.log,
+        error: console.error ? console.error : console.log,
+        debug: console.debug ? console.debug : console.debug
+    };
 
     this.routes = {
         HEAD: [],
@@ -162,7 +168,7 @@ Router.prototype.addStatic = function (route, path) {
                                     } else {
                                         redirectTo = redirectTo + "/index.html";
                                     }
-                                    console.log("Requested directory, redirect to: " + redirectTo);
+                                    self.logger.log("Requested directory, redirect to: " + redirectTo);
                                     res.writeHead(307, {
                                         "Location": redirectTo
                                     });
@@ -296,6 +302,8 @@ Router.prototype.connect = function () {
                     req.params = handler.params;
                     handler.fn(req, res, iterate);
                 } catch (e) {
+                    self.logger.error("Handler failed: ", e);
+                    self.logger.error(e.stack);
                     iterate();
                 }
             } else {
