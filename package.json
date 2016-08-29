@@ -6,7 +6,7 @@
     "keywords": [ "connect", "router", "mini-module" ],
     "main": "router.js",
     "dependencies": {
-        "mini-promise": "*",
+        "mini-promise-aplus": "*",
         "mime": "*"
     },
     "devDependencies": {

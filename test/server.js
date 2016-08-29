@@ -2,13 +2,13 @@ var connect = require("connect");
 var logger = require("connect-logger");
 var http = require("http");
 
-var Promise = require("mini-promise").Promise;
+var Promise = require("mini-promise-aplus").Promise;
 var Router = require("../router.js").Router;
 
 var router = new Router("test");
 
 Promise.all([
-    router.static("/modules/mini-promise.js", require.resolve("mini-promise")),
+    router.static("/modules/mini-promise.js", require.resolve("mini-promise-aplus")),
     router.static("/public/", __dirname + "/static/"),
     router.get("/hello", function (req, res) {
         res.end("Hello!\n");

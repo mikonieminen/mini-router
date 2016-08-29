@@ -1,7 +1,7 @@
 var fs = require("fs");
 var mime = require("mime");
 
-var Promise = require("mini-promise").Promise;
+var Promise = require("mini-promise-aplus").Promise;
 
 var URL = require("url");
 

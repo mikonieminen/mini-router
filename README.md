@@ -13,13 +13,13 @@ status when routes are added fully and when router is ready.
 var connect = require("connect");
 var http = require("http");
 
-var Promise = require("mini-promise").Promise;
+var Promise = require("mini-promise-aplus").Promise;
 var Router = require("mini-router").Router;
 
 var router = new Router("TestRouter");
 
 Promise.all([
-    router.static("/modules/mini-promise.js", require.resolve("mini-promise")),
+    router.static("/modules/mini-promise.js", require.resolve("mini-promise-aplus")),
     router.static("/public/", __dirname + "/static/"),
     router.get("/hello", function (req, res) {
         res.end("Hello!\n");
